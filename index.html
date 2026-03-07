@@ -43,6 +43,7 @@
             >Username</label
           >
           <input
+            id="username"
             type="text"
             class="input rounded-lg"
             placeholder="Enter Username"
@@ -53,15 +54,15 @@
             >Password</label
           >
           <input
+            id="password"
             type="password"
             class="input rounded-lg"
             placeholder="Enter Password"
           />
           <p class="text-primary text-sm">Default: admin123</p>
 
-          <button class="btn btn-primary mt-4">Sign In</button>
+          <button id="login-btn" class="btn btn-primary mt-4">Sign In</button>
         </fieldset>
-
         <div
           class="flex mt-6 items-center before:flex-1 before:border-t before:border-gray-300 before:mr-2 after:flex-1 after:border-t after:border-gray-300 after:ml-2"
         >
@@ -79,4 +80,5 @@
       </div>
     </section>
   </body>
+  <script src="login.js"></script>
 </html>
