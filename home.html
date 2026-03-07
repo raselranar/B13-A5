@@ -69,17 +69,19 @@
         </div>
       </section>
 
-      <!-- issue info section -->
-      <section class="mt-4">
+      <!-- issue section -->
+      <section class="mt-4 rounded-lg border-gray-200 border bg-base-300/60">
         <!-- issue counter and status -->
         <div
-          class="p-6 rounded-lg border-gray-200 border flex items-center justify-between"
+          class="p-6 flex flex-wrap items-center gap-3 justify-between shadow"
         >
           <!-- total issues -->
           <div class="flex items-center gap-4.25">
             <img src="./assets/Aperture.png" alt="Aperture icon" />
             <div class="">
-              <h2 class="font-semibold text-xl text-[#1F2937]">50 Issues</h2>
+              <h2 class="font-semibold text-xl text-[#1F2937]">
+                <span id="total-issues-show">50</span> Issues
+              </h2>
               <p class="text-gray-500">Track and manage your project issues</p>
             </div>
           </div>
@@ -99,8 +101,53 @@
             </div>
           </div>
         </div>
+
+        <!-- card/issue container -->
+        <div
+          id="card-container"
+          class="p-6 grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-3"
+        ></div>
       </section>
     </main>
   </body>
   <script src="script.js"></script>
 </html>
+
+<!-- 
+          <div
+            class="card bg-base-100 shadow-sm p-4 border-t-4 border-t-green-700 rounded-t-xl"
+          >
+            <div class="flex justify-between">
+              <img src="./assets/Open-Status.png" alt="Open-Status" />
+              <div
+                class="badge bg-red-400/25 border-none rounded-full badge-error uppercase text-red-500 font-medium px-6.25 py-2"
+              >
+                High
+              </div>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title mb-2 text-[#1F2937]">
+                Fix navigation menu on mobile devices
+              </h2>
+              <p class="text-gray-500 mb-3">
+                The navigation menu doesn't collapse properly on mobile
+                devices...
+              </p>
+              <div class="card-actions mb-4">
+                <div
+                  class="badge badge-error rounded-full bg-red-400/20 text-red-600/80 font-medium uppercase"
+                >
+                  <i class="fa-solid fa-bug"></i> Bug
+                </div>
+                <div
+                  class="badge badge-warning rounded-full bg-yellow-400/20 font-medium text-yellow-600 uppercase"
+                >
+                  <i class="fa-solid fa-life-ring"></i> help wanted
+                </div>
+              </div>
+              <div class="text-gray-500 space-y-2">
+                <h3 class="">#1by john_doe</h3>
+                <p class="">1/15/2024</p>
+              </div>
+            </div>
+          </div> -->
