@@ -1,6 +1,7 @@
 const tabButtonsEle = document.getElementById("tab-buttons");
 const totalIssuesEle = document.getElementById("total-issues-show");
 const cardContainerEle = document.getElementById("card-container");
+const cardLoadingEle = document.getElementById("card-loading");
 const colors = {
   high: {
     bg: "bg-red-400/25",
@@ -20,15 +21,18 @@ const colors = {
     text: "text-green-500",
   },
 };
+let activeTab = "all";
 
 // perform action when tab button clicked
 tabButtonsEle.addEventListener("click", (e) => {
   const tabButton = e.target.closest("button");
+  const id = tabButton.dataset.id;
   if (!tabButton) return;
+  if (activeTab === id) return;
   //   tab switch ui
   tabSwitchUI(tabButton);
-  const id = tabButton.dataset.id;
   fetchIssues(id);
+  activeTab = id;
 });
 
 //   tab switch ui
@@ -44,26 +48,10 @@ function tabSwitchUI(button) {
 function renderCards(data) {
   cardContainerEle.innerHTML = "";
   const fragment = document.createDocumentFragment();
-  /*
-{
-    "id": 1,
-    "title": "Fix navigation menu on mobile devices",
-    "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
-    "status": "open",
-    "labels": [
-        "bug",
-        "help wanted"
-    ],
-    "priority": "high",
-    "author": "john_doe",
-    "assignee": "jane_smith",
-    "createdAt": "2024-01-15T10:30:00Z",
-    "updatedAt": "2024-01-15T10:30:00Z"
-}
-*/
+
   data.forEach((item) => {
     const card = document.createElement("div");
-    card.className = `card bg-base-100 shadow-sm p-4 border-t-4 ${item.status.toLowerCase() === "open" ? "border-t-[#00A96E]" : "border-t-[#A855F7]"}`;
+    card.className = `card bg-base-100 shadow-sm border-t-4 ${item.status.toLowerCase() === "open" ? "border-t-[#00A96E]" : "border-t-[#A855F7]"}`;
     const status =
       item.status.toLowerCase() === "open" ? "Open-Status" : "Closed-Status";
     const priorityColor = colors[item.priority.toLowerCase()] || colors.low;
@@ -90,6 +78,7 @@ function renderCards(data) {
     // insert html on card
     card.innerHTML = `
     
+    <div class="p-4 border-b border-b-gray-300">
             <div class="flex justify-between">
             
               <img src="./assets/${status}.png" alt="${status}" />
@@ -99,8 +88,7 @@ function renderCards(data) {
                 ${item.priority}
               </div>
             </div>
-            <div class="card-body">
-              <h2 class="card-title mb-2 text-[#1F2937]">
+              <h2 class="card-title mb-2 mt-3 text-[#1F2937]">
                 ${item.title}
               </h2>
               <div>
@@ -108,23 +96,25 @@ function renderCards(data) {
                 ${item.description}
               </p>
               </div>
-              <div class="card-actions mb-4">
+              <div class="card-actions">
                 ${labelBadges}
               </div>
+              </div>
               <!-- Author -->
-              <div class="text-gray-500 space-y-2">
+              <div class="text-gray-500 space-y-2 p-4">
                 <h3 class="">#1 by ${item.author}</h3>
                 <p class="">${date.toLocaleDateString()}</p>
               </div>
-            </div>
           `;
     fragment.appendChild(card);
   });
   cardContainerEle.appendChild(fragment);
+  cardLoading();
 }
 
 // fetch All issues
 async function fetchIssues(id) {
+  cardLoading(true);
   const res = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
@@ -152,4 +142,14 @@ async function fetchIssues(id) {
 }
 fetchIssues();
 
-function cardLoadingUI() {}
+// loading spinner
+function cardLoading(status) {
+  if (status) {
+    cardContainerEle.classList.add("hidden");
+    cardLoadingEle.classList.remove("hidden");
+    return;
+  }
+
+  cardContainerEle.classList.remove("hidden");
+  cardLoadingEle.classList.add("hidden");
+}
