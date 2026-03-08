@@ -61,11 +61,16 @@
       <!-- tab buttons -->
       <section class="p-6 rounded-lg border-gray-200 border">
         <div id="tab-buttons" class="flex gap-2.5">
-          <button class="btn text-gray-500 btn-primary text-white w-28">
+          <button
+            data-id="all"
+            class="btn text-gray-500 btn-primary text-white w-28"
+          >
             All
           </button>
-          <button class="btn text-gray-500 w-28">Open</button>
-          <button class="btn text-gray-500 w-28">Closed</button>
+          <button data-id="open" class="btn text-gray-500 w-28">Open</button>
+          <button data-id="closed" class="btn text-gray-500 w-28">
+            Closed
+          </button>
         </div>
       </section>
 
@@ -73,7 +78,7 @@
       <section class="mt-4 rounded-lg border-gray-200 border bg-base-300/60">
         <!-- issue counter and status -->
         <div
-          class="p-6 flex flex-wrap items-center gap-3 justify-between shadow"
+          class="p-4 flex flex-wrap items-center gap-3 justify-between shadow"
         >
           <!-- total issues -->
           <div class="flex items-center gap-4.25">
@@ -107,6 +112,10 @@
           id="card-container"
           class="p-6 grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-3"
         ></div>
+        <!-- loading -->
+        <div class="outline h-[50vh] hidden">
+          <span class="loading loading-dots loading-xl"></span>
+        </div>
       </section>
     </main>
   </body>

@@ -27,6 +27,8 @@ tabButtonsEle.addEventListener("click", (e) => {
   if (!tabButton) return;
   //   tab switch ui
   tabSwitchUI(tabButton);
+  const id = tabButton.dataset.id;
+  fetchIssues(id);
 });
 
 //   tab switch ui
@@ -122,12 +124,32 @@ function renderCards(data) {
 }
 
 // fetch All issues
-async function fetchIssues() {
+async function fetchIssues(id) {
   const res = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
   const { data } = await res.json();
-  totalIssuesEle.textContent = data.length;
+  if (id === "open") {
+    const filtered = data.filter(
+      (item) => item.status.toLowerCase() === "open",
+    );
+    renderCards(filtered);
+    totalIssuesEle.textContent = filtered.length;
+
+    return;
+  }
+  if (id === "closed") {
+    const filtered = data.filter(
+      (item) => item.status.toLowerCase() === "closed",
+    );
+    renderCards(filtered);
+    totalIssuesEle.textContent = filtered.length;
+
+    return;
+  }
   renderCards(data);
+  totalIssuesEle.textContent = data.length;
 }
 fetchIssues();
+
+function cardLoadingUI() {}
