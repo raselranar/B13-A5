@@ -3,6 +3,7 @@ const totalIssuesEle = document.getElementById("total-issues-show");
 const cardContainerEle = document.getElementById("card-container");
 const cardLoadingEle = document.getElementById("card-loading");
 const cardModalEle = document.getElementById("card-info-modal");
+const searchInputEle = document.getElementById("search-input");
 const colors = {
   high: {
     bg: "bg-red-400/25",
@@ -69,9 +70,19 @@ function labelBadges(data) {
 }
 
 //  render card
-function renderCards(data) {
+function renderCards(data = []) {
   cardContainerEle.innerHTML = "";
   const fragment = document.createDocumentFragment();
+
+  if (data.length === 0) {
+    cardContainerEle.innerHTML = `
+    <div
+          class="h-[50vh] col-span-full flex justify-center items-center"
+        >
+        <p class="text-3xl font-bold text-gray-400">No Issue Found</p>
+        </div>
+    `;
+  }
 
   data.forEach((item) => {
     const card = document.createElement("div");
@@ -211,4 +222,15 @@ cardContainerEle.addEventListener("click", async (e) => {
       </div>
 `;
   cardModalEle.showModal();
+});
+
+document.getElementById("search-btn").addEventListener("click", async (e) => {
+  const searchText = searchInputEle.value;
+  cardLoading(true);
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`,
+  );
+  const { data } = await res.json();
+  renderCards(data);
+  totalIssuesEle.textContent = data.length;
 });
