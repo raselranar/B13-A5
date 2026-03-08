@@ -2,6 +2,7 @@ const tabButtonsEle = document.getElementById("tab-buttons");
 const totalIssuesEle = document.getElementById("total-issues-show");
 const cardContainerEle = document.getElementById("card-container");
 const cardLoadingEle = document.getElementById("card-loading");
+const cardModalEle = document.getElementById("card-info-modal");
 const colors = {
   high: {
     bg: "bg-red-400/25",
@@ -44,6 +45,29 @@ function tabSwitchUI(button) {
   // make clicked button active
   button.classList.add("btn-primary", "text-white");
 }
+
+// label bagels
+function labelBadges(data) {
+  // label badges
+  const badges = data
+    .map((item) => {
+      const labelName = item.toLowerCase();
+      const labelColor =
+        labelName === "bug"
+          ? colors.high
+          : labelName === "enhancement"
+            ? colors.green
+            : colors.medium;
+      return `<div
+                  class="badge ${labelName === "bug" ? "badge-error" : labelName === "enhancement" ? "badge-success" : "badge-warning"} rounded-full ${labelColor.bg} ${labelColor.text} font-medium uppercase"
+                >
+                  ${item}
+                </div>`;
+    })
+    .join(" ");
+  return badges;
+}
+
 //  render card
 function renderCards(data) {
   cardContainerEle.innerHTML = "";
@@ -51,29 +75,12 @@ function renderCards(data) {
 
   data.forEach((item) => {
     const card = document.createElement("div");
+    card.dataset.id = item.id;
     card.className = `card bg-base-100 shadow-sm border-t-4 ${item.status.toLowerCase() === "open" ? "border-t-[#00A96E]" : "border-t-[#A855F7]"}`;
     const status =
       item.status.toLowerCase() === "open" ? "Open-Status" : "Closed-Status";
     const priorityColor = colors[item.priority.toLowerCase()] || colors.low;
     const date = new Date(item.createdAt);
-
-    // label badges
-    const labelBadges = item.labels
-      .map((item) => {
-        const labelName = item.toLowerCase();
-        const labelColor =
-          labelName === "bug"
-            ? colors.high
-            : labelName === "enhancement"
-              ? colors.green
-              : colors.medium;
-        return `<div
-                  class="badge ${labelName === "bug" ? "badge-error" : labelName === "enhancement" ? "badge-success" : "badge-warning"} rounded-full ${labelColor.bg} ${labelColor.text} font-medium uppercase"
-                >
-                  ${item}
-                </div>`;
-      })
-      .join(" ");
 
     // insert html on card
     card.innerHTML = `
@@ -97,7 +104,7 @@ function renderCards(data) {
               </p>
               </div>
               <div class="card-actions">
-                ${labelBadges}
+                ${labelBadges(item.labels)}
               </div>
               </div>
               <!-- Author -->
@@ -153,3 +160,55 @@ function cardLoading(status) {
   cardContainerEle.classList.remove("hidden");
   cardLoadingEle.classList.add("hidden");
 }
+
+// show modal
+cardContainerEle.addEventListener("click", async (e) => {
+  const card = e.target.closest(".card");
+  if (!card) return;
+  const id = card.dataset.id;
+  if (!id) return;
+
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`,
+  );
+  const { data } = await res.json();
+  const date = new Date(data.createdAt);
+  const priorityColor = colors[data.priority.toLowerCase()] || colors.low;
+
+  cardModalEle.innerHTML = `
+ <div class="modal-box">
+        <h3 class="text-2xl font-bold mb-2">${data.title}</h3>
+        <div class="flex gap-2 items-center">
+        <div class="badge text-white ${data.status.toLowerCase() === "open" ? "bg-[#00A96E]" : "bg-[#A855F7]"}  rounded-full badge-sm">${data.status.toLowerCase() === "open" ? "Opened" : "Closed"}</div> 
+        <p class="text-gray-400 text-xs">
+       • Opened by ${data.author} • ${date.toLocaleDateString()}
+        </p>
+        </div>
+        <div class="my-3">${labelBadges(data.labels)}</div>
+        <p class="text-gray-500">
+          ${data.description}
+        </p>
+        <div class="flex justify-between">
+          <div class="">
+            <p class="text-gray-400">Assignee:</p>
+            <p class="font-semibold text-[#1F2937]">${data.assignee}</p>
+          </div>
+          <div class="">
+            <p class="text-gray-400">Priority:</p>
+            <div
+                class="badge ${priorityColor.bg} rounded-full uppercase ${priorityColor.text} font-medium"
+              >
+                ${data.priority}
+              </div>
+          </div>
+        </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn btn-primary">Close</button>
+          </form>
+        </div>
+      </div>
+`;
+  cardModalEle.showModal();
+});

@@ -27,9 +27,11 @@
     <!-- login form -->
     <!-- container -->
     <section class="flex flex-col justify-center items-center h-screen">
-      <div class="bg-base-200 border-base-300 rounded-box border p-4">
+      <div
+        class="bg-base-200 border-base-300 rounded-box border p-4 w-80 sm:w-100 shadow-2xl"
+      >
         <!-- heading -->
-        <div class="flex flex-col items-center justify-center gap-6 mb-6">
+        <div class="flex flex-col items-center justify-center gap-2 mb-2">
           <img src="./assets/github-logo.png" alt="github-logo" />
           <div class="text-center">
             <h1 class="font-bold text-2xl leading-7.25">
@@ -45,7 +47,7 @@
           <input
             id="username"
             type="text"
-            class="input rounded-lg"
+            class="input rounded-lg w-full"
             placeholder="Enter Username"
           />
           <p class="text-primary text-sm">Default: admin</p>
@@ -56,7 +58,7 @@
           <input
             id="password"
             type="password"
-            class="input rounded-lg"
+            class="input rounded-lg w-full"
             placeholder="Enter Password"
           />
           <p class="text-primary text-sm">Default: admin123</p>
@@ -64,13 +66,13 @@
           <button id="login-btn" class="btn btn-primary mt-4">Sign In</button>
         </fieldset>
         <div
-          class="flex mt-6 items-center before:flex-1 before:border-t before:border-gray-300 before:mr-2 after:flex-1 after:border-t after:border-gray-300 after:ml-2"
+          class="flex mt-2 items-center before:flex-1 before:border-t before:border-gray-300 before:mr-2 after:flex-1 after:border-t after:border-gray-300 after:ml-2"
         >
           OR
         </div>
-        <div class="mt-6">
+        <div class="mt-2">
           <p class="text-gray-500 text-center">Demo Credentials:</p>
-          <div class="mt-7.5 text-center">
+          <div class="mt-3 text-center">
             <p class=""><span class="font-semibold">Username: </span>admin</p>
             <p class="">
               <span class="font-semibold">Password: </span> admin123
