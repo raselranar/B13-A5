@@ -8,7 +8,7 @@ loginButton.addEventListener("click", (e) => {
 
   if (userName === "admin" && password === "admin123") {
     console.log("login successful");
-    window.location.href = "/home.html";
+    window.location.href = "home.html";
     return;
   }
   alert("Please enter correct Username and password");

@@ -82,12 +82,13 @@ function renderCards(data = []) {
         <p class="text-3xl font-bold text-gray-400">No Issue Found</p>
         </div>
     `;
+    return;
   }
 
   data.forEach((item) => {
     const card = document.createElement("div");
     card.dataset.id = item.id;
-    card.className = `card bg-base-100 shadow-sm border-t-4 ${item.status.toLowerCase() === "open" ? "border-t-[#00A96E]" : "border-t-[#A855F7]"}`;
+    card.className = `card bg-base-100 border border-gray-300/80 shadow-sm border-t-4 ${item.status.toLowerCase() === "open" ? "border-t-[#00A96E]" : "border-t-[#A855F7]"}`;
     const status =
       item.status.toLowerCase() === "open" ? "Open-Status" : "Closed-Status";
     const priorityColor = colors[item.priority.toLowerCase()] || colors.low;
@@ -127,7 +128,6 @@ function renderCards(data = []) {
     fragment.appendChild(card);
   });
   cardContainerEle.appendChild(fragment);
-  cardLoading();
 }
 
 // fetch All issues
@@ -142,6 +142,8 @@ async function fetchIssues(id) {
       (item) => item.status.toLowerCase() === "open",
     );
     renderCards(filtered);
+    cardLoading();
+
     totalIssuesEle.textContent = filtered.length;
 
     return;
@@ -151,11 +153,15 @@ async function fetchIssues(id) {
       (item) => item.status.toLowerCase() === "closed",
     );
     renderCards(filtered);
+    cardLoading();
+
     totalIssuesEle.textContent = filtered.length;
 
     return;
   }
   renderCards(data);
+  cardLoading();
+
   totalIssuesEle.textContent = data.length;
 }
 fetchIssues();
@@ -232,5 +238,7 @@ document.getElementById("search-btn").addEventListener("click", async (e) => {
   );
   const { data } = await res.json();
   renderCards(data);
+  cardLoading();
+
   totalIssuesEle.textContent = data.length;
 });
