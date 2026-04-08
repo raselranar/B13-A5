@@ -4,6 +4,7 @@ A responsive GitHub Issues Tracker built using **Vanilla JavaScript** and **Tail
 It allows users to view, search, and filter issues dynamically with clear status indicators (Open/Closed) and modal-based detailed views.
 
 🔗 Live Site: https://github-issues-tracker-web-app.netlify.app/home.html
+
 🔗 GitHub Repo: https://github.com/raselranar/B13-A5
 
 ---
