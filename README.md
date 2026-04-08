@@ -1,66 +1,65 @@
-1️⃣ What is the difference between var, let, and const?
+# 📝 GitHub Issues Tracker
 
-var:
+A responsive GitHub Issues Tracker built using **Vanilla JavaScript** and **Tailwind CSS/DaisyUI**.  
+It allows users to view, search, and filter issues dynamically with clear status indicators (Open/Closed) and modal-based detailed views.
 
-- hoisted and initialized with undefined
-- it has function scope
-- Reassignable and Redeclarable
-
-let:
-
-- hoisted but uninitialized or TDZ
-- it has function scope and block scope (eg."{}")
-- Re-assignable but no Re-declarable
-
-const:
-
-- hoisted but uninitialized or TDZ
-- it has function scope and block scope (eg."{}")
-- no Re-assignable and no Re-declarable
+🔗 Live Site: https://github-issues-tracker-web-app.netlify.app/home.html
+🔗 GitHub Repo: https://github.com/raselranar/B13-A5
 
 ---
 
-2️⃣ What is the spread operator (...)?
-The spread operator is introduced in es6.
-use case:
+## 📌 Project Overview
 
-example of making a copy array or object:
+This project simulates a GitHub-like issue tracker where users can:
+- Login with default admin credentials
+- View all issues in a card-based 4-column layout
+- Filter issues by status: All, Open, Closed
+- Search issues using keywords
+- Open issue details in a modal
+- See visual status indicators with top-border colors
 
-- `const newArray = [...oldArray]`
-- `const newObject = {...oldOject}`
-
-example of concat multiple array or object:
-
-- `const concatArray = [...arr, ...arr2]`
-- `const concatObject = [...obj, ...obj2]`
-
-...array => expand array items
+The design follows a **Figma template** and is fully responsive for desktop and mobile devices.
 
 ---
 
-3️⃣ What is the difference between map(), filter(), and forEach()?
+## 🖼️ Screenshot
+![1773074790755](https://github.com/user-attachments/assets/50781a94-cbc7-4f4d-b917-48c51124a517)
 
-- map(): return new array length is same as original array . every item can be modified. does not change the original array
-
-- filter(): return new array based on condition. does not change the original array
-
-- forEach(): return undefined loop on array. use array item each looping iterate
 
 ---
 
-4️⃣ What is an arrow function?
-array function is a shorter syntax of function
+## ✨ Key Features
 
-- don't need to use function keyword
-- can be written in one line
-- can be skip return keyword if not use {} .`(a,b) => a+b;`
-- if it has one parameter don't need to use (). `a => a+a`
+- 🔐 Login Page with demo credentials  
+- 🏷 Display all issues in card layout  
+- 🎨 Top border colors: Green (Open), Purple (Closed)  
+- 🔍 Search functionality with real-time filtering  
+- 🗂 Tab-based filtering (All / Open / Closed)  
+- 🖥 Modal popup for detailed issue information  
+- ⏳ Loading spinner while fetching data  
+- 📱 Fully responsive design  
 
 ---
 
-5️⃣ What are template literals?
-Template literals is introduced in es6.This is defined using back-tick (`).
-use case:
+## ⚙️ Tech Stack
 
-- create multi-line string without "+" and "\n".
-- write expression in string `${expression}`
+- **HTML5 & CSS3** (Vanilla / Tailwind CSS / DaisyUI)  
+- **JavaScript (ES6+)**  
+- **API Endpoints**:  
+  - All Issues: `https://phi-lab-server.vercel.app/api/v1/lab/issues`  
+  - Single Issue: `https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}`  
+  - Search Issues: `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}`  
+
+---
+
+## 📦 How to Run Locally
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/raselranar/B13-A5.git
+
+# 2. Go to project folder
+cd github-issues-tracker
+
+# 3. Open index.html in browser
+open index.html
